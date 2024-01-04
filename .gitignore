@@ -2,3 +2,5 @@
 *.o
 *.csv
 *.sc
+myprog.c
+a.out

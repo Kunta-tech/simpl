@@ -18,7 +18,7 @@ typedef uint8_t  LTL;	// Logic Table
 typedef struct ctl CTL; // Custom Table
 struct ctl{
 	lg32 lgTL;
-	uint8_t TLlen;
+	uint8_t TLlen;	// TLlen is always a power of 2
 };
 
 CTL createVar(){
@@ -35,10 +35,7 @@ void CTL_mirror(CTL *obj){
 void CTL_expand(CTL *obj){
 	lg32 temp = 0;
 	for(int i=0;i<obj->TLlen;i++){
-		if((obj->lgTL)&(1<<i)){
-			temp |= 1<<(i*2);
-			temp |= 1<<(i*2 + 1);
-		}
+		if((obj->lgTL)&(1<<i)) temp |= 3<<(i*2);
 	}
 	obj->lgTL = temp;
 	obj->TLlen <<=1;
@@ -52,6 +49,7 @@ void CTL_expand(CTL *obj){
  **/
 void printTT_CSV(int n, char *inst_set, CTL *Table, char **names){
 	/* Checking the parameters */
+	assert(n>0);
 	for(int i=0;i<n;i++){
 		// inst_set has char from 0 to 9
 		assert(inst_set[i]>='0' && inst_set[i]<='9');
@@ -62,8 +60,7 @@ void printTT_CSV(int n, char *inst_set, CTL *Table, char **names){
 	}
 
 	/* Printing the headers */
-	for(int i=0;i<n;i++) printf("%s,",names[i]);
-	printf("\n");
+	for(int i=0;i<n;i++) printf("%s%c",names[i],(i==n-1?'\n':','));
 
 	int maxlength = 0;
 	for(int i=0;i<n;i++) maxlength = (Table[i].TLlen>maxlength)?Table[i].TLlen:maxlength;
@@ -74,12 +71,9 @@ void printTT_CSV(int n, char *inst_set, CTL *Table, char **names){
 		while (Table[i].TLlen<maxlength) CTL_mirror(&Table[i]);
 	}
 
-	for(int i=0;i<maxlength;i++){
-		for(int j=0;j<n;j++){
-			printf("%d,",!!(Table[j].lgTL&(1<<i)));
-		}
-		printf("\n");
-	}
+	for(int i=0;i<maxlength;i++)
+		for(int j=0;j<n;j++)
+			printf("%d%c",!!(Table[j].lgTL&(1<<i)),(j==n-1?'\n':','));
 }
 
 char* splCTLtoString(CTL A){
