@@ -1,6 +1,11 @@
 #ifndef LIBSPL_H
 #define LIBSPL_H
 
+/*!
+ * Copyright (c) 2024 Kunta-tech. All Rights Reserved.
+ * Under GNU License
+ */
+
 #include <stdint.h>
 typedef uint8_t	 lg8;	// 8  bit logic
 typedef uint16_t lg16;	// 16 bit logic
@@ -16,6 +21,8 @@ typedef struct ctl CTL; // Custom Table
 
 #define ANDTL (LTL)8	// 1000
 #define ORTL  (LTL)14	// 1110
+
+CTL createVar();
 
 char* splCTLtoString(CTL);
 

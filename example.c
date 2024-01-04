@@ -4,15 +4,16 @@
 
 int main()
 {
-	CTL A, B;
-	A.lgTL = 2;
-	A.TLlen = 2;
-	B.lgTL = 2;
-	B.TLlen = 2;
+	CTL A = createVar(), B = createVar();
 
-	CTL C = splOPT(ORTL, A, B);
+	CTL C = splOPT(ORTL, A, B);		// A OR B -> C
 	char *str = splCTLtoString(C);
 	printf("C: %s, len=%d\n",str,C.TLlen);
 	free(str);
+	A = splOPT(ANDTL, C, B);		// C AND D -> E
+	str = splCTLtoString(A);
+	printf("A: %s, len=%d\n",str,A.TLlen);
+	free(str);
+
 	return 0;
 }
