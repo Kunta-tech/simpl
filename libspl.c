@@ -1,3 +1,6 @@
+#include <asm-generic/errno.h>
+#include <assert.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -25,10 +28,58 @@ CTL createVar(){
 	return newVar;
 }
 
-void swap(void *A,void *B){
-	void *C = A;
-	A = B;
-	B = C;
+void CTL_mirror(CTL *obj){
+	obj->lgTL |= (obj->lgTL)<<(obj->TLlen);
+	obj->TLlen <<=1;
+}
+void CTL_expand(CTL *obj){
+	lg32 temp = 0;
+	for(int i=0;i<obj->TLlen;i++){
+		if((obj->lgTL)&(1<<i)){
+			temp |= 1<<(i*2);
+			temp |= 1<<(i*2 + 1);
+		}
+	}
+	obj->lgTL = temp;
+	obj->TLlen <<=1;
+}
+
+//	TT: Truth Table
+/**	For anyone watching this code
+ *	I know this sh*t is messed up
+ *		So, please feel free to
+ *	share a better code for this🥺
+ **/
+void printTT_CSV(int n, char *inst_set, CTL *Table, char **names){
+	/* Checking the parameters */
+	for(int i=0;i<n;i++){
+		// inst_set has char from 0 to 9
+		assert(inst_set[i]>='0' && inst_set[i]<='9');
+		// Table[i].TLlen is a power of 2
+		int temp = Table[i].TLlen;
+		while (temp>0 && temp%2==0) temp >>= 1;
+		assert(temp == 1);
+	}
+
+	/* Printing the headers */
+	for(int i=0;i<n;i++) printf("%s,",names[i]);
+	printf("\n");
+
+	int maxlength = 0;
+	for(int i=0;i<n;i++) maxlength = (Table[i].TLlen>maxlength)?Table[i].TLlen:maxlength;
+
+	for(int i=0;i<n;i++){
+		int cnt = inst_set[i]-'0';
+		while (Table[i].TLlen<maxlength && cnt-->0) CTL_expand(&Table[i]);
+		while (Table[i].TLlen<maxlength) CTL_mirror(&Table[i]);
+	}
+
+	for(int i=0;i<maxlength;i++){
+		for(int j=0;j<n;j++){
+			printf("%d,",!!(Table[j].lgTL&(1<<i)));
+		}
+		printf("\n");
+	}
 }
 
 char* splCTLtoString(CTL A){
@@ -40,7 +91,11 @@ char* splCTLtoString(CTL A){
 
 CTL splOPT(LTL TL, CTL obj1, CTL obj2){
 	CTL newTL;
-	if(obj2.TLlen>obj1.TLlen)	swap(&obj1,&obj2);
+	if(obj2.TLlen>obj1.TLlen){
+		CTL temp = obj2;
+		obj2 = obj1;
+		obj1 = temp;
+	}
 
 	newTL.lgTL = 0;
 	newTL.TLlen = obj1.TLlen;

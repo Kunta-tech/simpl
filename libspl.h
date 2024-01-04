@@ -24,6 +24,8 @@ typedef struct ctl CTL; // Custom Table
 
 CTL createVar();
 
+void printTT_CSV(int, char*, CTL*, char**);
+
 char* splCTLtoString(CTL);
 
 CTL splOPT(LTL ,CTL ,CTL);
