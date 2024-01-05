@@ -10,9 +10,9 @@ gcc -o example.exe example.c libspl.c
 
 # OUTPUT from example
 ```bash
-C: 1110, len=4
+C: 10, len=2
 E: 10101000, len=8
-A,B,D,C,E
+A,B,C,A|B,(A|B)&C
 0,0,0,0,0
 0,0,1,0,0
 0,1,0,1,0
@@ -23,4 +23,4 @@ A,B,D,C,E
 1,1,1,1,1
 ```
 ## The Truth Table
-![](./images/04-January-24-232615.jpg)
+![](./images/ExampleTable.jpg)

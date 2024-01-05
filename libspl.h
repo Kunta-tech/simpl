@@ -19,10 +19,10 @@ struct ctl{
 
 typedef struct ctl CTL; // Custom Table
 
-#define ANDTL (LTL)0x08	// 1000
-#define ORTL  (LTL)0x0E	// 1110
-#define IFTL  (LTL)0x0B	// 1011
-#define NIFTL (LTL)0x04	// 0100
+#define ANDTL (LTL)0x8	// 1000
+#define ORTL  (LTL)0xE	// 1110
+#define IFTL  (LTL)0xB	// 1011
+#define NIFTL (LTL)0x4	// 0100
 
 CTL createVar();
 
