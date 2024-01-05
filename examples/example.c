@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libspl.h"
+#include "../libspl.h"
 
 int main()
 {

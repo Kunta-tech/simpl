@@ -22,9 +22,10 @@ struct ctl{
 };
 
 CTL createVar(){
-	CTL newVar;
-	newVar.lgTL = 2;
-	newVar.TLlen = 2;
+	CTL newVar = {
+		.lgTL = 2, /* There are only two states in a single variable 0 & 1 */
+		.TLlen= 2
+	};
 	return newVar;
 }
 
@@ -85,11 +86,6 @@ char* splCTLtoString(CTL A){
 
 CTL splOPT(LTL TL, CTL obj1, CTL obj2){
 	CTL newTL;
-	if(obj2.TLlen>obj1.TLlen){
-		CTL temp = obj2;
-		obj2 = obj1;
-		obj1 = temp;
-	}
 
 	newTL.lgTL = 0;
 	newTL.TLlen = obj1.TLlen;
