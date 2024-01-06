@@ -27,11 +27,6 @@ A,B,C,A|B,(A|B)&C
 1,1,0,1,0
 1,1,1,1,1
 ```
-Let’s assume:
-P: Jasmine is invited.
-Q: Kanti is invited.
-R: Samir is invited.
-The following three conditions should be met:
-a) P → ¬R: If Jasmine is invited, Samir will not be invited.
+
 ## The Truth Table
 ![](./images/ExampleTable.jpg)
