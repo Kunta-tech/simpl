@@ -13,8 +13,8 @@ typedef uint32_t lg32;	// 16 bit logic
 typedef uint8_t  LTL;	// Logic Table
 
 struct ctl{
-	lg32 lgTL;
-	uint8_t TLlen;
+	lg32 lgTL;	// It is the state table of the expression
+	uint8_t res;	// it stores the position of expression variables
 };
 
 typedef struct ctl CTL; // Custom Table
@@ -22,14 +22,18 @@ typedef struct ctl CTL; // Custom Table
 #define ANDTL (LTL)0x8	// 1000
 #define ORTL  (LTL)0xE	// 1110
 #define IFTL  (LTL)0xB	// 1011
-#define NIFTL (LTL)0x4	// 0100
+#define NIFTL (LTL)0xD	// 1101
+#define XORTL (LTL)0x6	// 0110
+#define EQTL  (LTL)0x9	// 1001
 
-CTL createVar();
+CTL createVar(lg8);
 
-void printTT_CSV(int, char*, CTL*, char**);
+void drawTable(CTL ,char);
+void drawTables(int ,CTL* ,char);
 
 char* splCTLtoString(CTL);
 
+CTL splNOT(CTL);
 CTL splOPT(LTL ,CTL ,CTL);
 
 #endif // !LIBSPL_H

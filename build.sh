@@ -12,4 +12,5 @@ function compile_example ()
 }
 
 for i in $(ls ./examples)
-	compile_example "${i%%.*}"
+	compile_example "${i%%.*}" &
+wait
