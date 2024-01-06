@@ -24,6 +24,7 @@ struct ctl{
 uint8_t CTL_len(CTL obj){
 	uint8_t cnt = 0;
 	uint8_t n = obj.res;
+	if(n==0) return 1;
 	while (n>0) { n>>=1;cnt++; }
 	cnt = 1<<cnt;
 	return cnt;
@@ -80,7 +81,8 @@ void drawTables(int n, CTL *table, char sep){
 		maxlen = (lens[i]>maxlen)?lens[i]:maxlen;
 	}
 	for(int i=0;i<maxlen;i++){
-		for(int j=0;j<n;j++)	printf("%d%c",!!(table[j].lgTL&(1<<(i%lens[j]))),(j==n-1)?'\n':sep);
+		for(int j=0;j<n;j++)
+			printf("%d%c",!!(table[j].lgTL&(1<<(i%lens[j]))),(j==n-1)?'\n':sep);
 	}
 }
 
@@ -111,7 +113,7 @@ CTL splOPT(LTL TL, CTL obj1, CTL obj2){
 	if(len1 >= len2) newlen = len1;
 	else		 newlen = len2;
 	
-	int b1,b2;// szdiff = obj1.TLlen/obj2.TLlen;
+	int b1,b2;
 	int cnt = 0;
 	for(int i=0;i<newlen;i++){
 		b1 = obj1.lgTL&(1<<(i%len1));

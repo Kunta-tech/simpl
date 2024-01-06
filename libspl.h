@@ -26,6 +26,9 @@ typedef struct ctl CTL; // Custom Table
 #define XORTL (LTL)0x6	// 0110
 #define EQTL  (LTL)0x9	// 1001
 
+const CTL SPL_TRUE = { .lgTL=1, .res=0 };
+const CTL SPL_FALSE= { .lgTL=0, .res=0 };
+
 CTL createVar(lg8);
 
 void drawTable(CTL ,char);
