@@ -8,7 +8,7 @@ mkdir -p bin/
 function compile_example ()
 {
 	NAME="$1"
-	gcc -Os -o bin/$NAME.exe examples/$NAME.c libspl.c
+	gcc -Os -o bin/$NAME.exe examples/$NAME.c libspl.c -s
 }
 
 for i in $(ls ./examples)

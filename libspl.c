@@ -67,7 +67,7 @@ void drawTable(CTL obj,char sep){
 	int TLlen = CTL_len(obj), rtemp;
 	for(int i=0;i<TLlen;i++){
 		rtemp = TLlen>>1;
-		for(;rtemp>0;rtemp>>=1)	printf("%d%c",!!(i&rtemp),sep);
+		for(;rtemp>0;rtemp>>=1)	printf("%c%c",(i&rtemp)?'T':'F',sep);
 		printf("%d\n",!!(obj.lgTL&(1<<i)));
 	}
 }
@@ -82,7 +82,7 @@ void drawTables(int n, CTL *table, char sep){
 	}
 	for(int i=0;i<maxlen;i++){
 		for(int j=0;j<n;j++)
-			printf("%d%c",!!(table[j].lgTL&(1<<(i%lens[j]))),(j==n-1)?'\n':sep);
+			printf("%c%c",(table[j].lgTL&(1<<(i%lens[j])))?'T':'F',(j==n-1)?'\n':sep);
 	}
 }
 
